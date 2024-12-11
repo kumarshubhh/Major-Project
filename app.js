@@ -150,7 +150,7 @@ app.use((err, req, res, next)=>{
     res.status(statusCode).render("error.ejs", {err})
    // res.status(statusCode).send(message);
 })
-app.all("*", (req, res, next)=>{
+app.all("/", (req, res, next)=>{
     next(new EpressErr(404, "page not Found"))
 })
 
