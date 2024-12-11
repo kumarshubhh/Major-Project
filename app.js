@@ -33,6 +33,8 @@ const router = require("./routes/listing.js");
 
 
 const dbUrl = process.env.ATLASDB_URL;
+const port = process.env.PORT || 8080;
+
 
 main()
 .then(() =>{
@@ -163,6 +165,6 @@ app.all("*", (req, res, next)=>{
 
 
 
-app.listen("8080", () =>{
+app.listen(port, () =>{
     console.log("server is listenig to port 8080")
 })
