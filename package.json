@@ -10,21 +10,6 @@
   },
 
 
-  "overrides": {
-
-
-    "multer-storage-cloudinary": {
-
-
-      "cloudinary": "^2.5.1"
-
-
-    }
-
-
-  },
-
-
   "name": "major-project",
 
 
