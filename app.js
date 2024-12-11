@@ -28,6 +28,9 @@ const passport = require("passport")
 const LocalStrategy = require("passport-local")
 const User = require("./models/user.js");
 
+const serverless = require("serverless-http");
+const router = require("./routes/listing.js");
+
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -148,6 +151,10 @@ app.use((err, req, res, next)=>{
 app.all("*", (req, res, next)=>{
     next(new EpressErr(404, "page not Found"))
 })
+
+
+
+
 
 
 
