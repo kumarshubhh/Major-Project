@@ -81,9 +81,7 @@ const sessionOptions = {
     }
 }
 
-// app.get("/", (req, res) =>{
-//     res.send("hi i am root")
-// });
+
 
 
 
@@ -142,17 +140,17 @@ app.use("/",  userRouter)
 
 
 
-
+app.all("*", (req, res, next)=>{
+    next(new EpressErr(404, "page not Found"))
+})
 
 
 app.use((err, req, res, next)=>{
-    let {statusCode=505, message="Something Error"} = err;
+    let {statusCode=500, message="Something Error"} = err;
     res.status(statusCode).render("error.ejs", {err})
    // res.status(statusCode).send(message);
 })
-app.all("/", (req, res, next)=>{
-    next(new EpressErr(404, "page not Found"))
-})
+
 
 // Catch-all route for undefined endpoints
 // app.use((req, res, next) => {
