@@ -1,0 +1,62 @@
+<% layout("./layouts/boilerplate") %>
+
+<style>
+    a {
+        text-decoration: none;
+        color: black;
+    }
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .listing-card {
+        transition: transform 0.3s;
+    }
+    .listing-card:hover {
+        transform: scale(1.05);
+    }
+    @media (max-width: 768px) {
+        .col-md-4 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+    @media (max-width: 480px) {
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h2 class="text-center mt-3">Listing for <%= category %></h2>
+        
+        <% if (listings.length > 0) { %>  
+            <div class="row mt-3" id="listingItems">
+                <% listings.forEach(listing => { %>  
+                    <div class="col-md-4 mb-4">
+                        <a href="/listings/<%= listing._id %>">
+                            <div class="card listing-card">
+                                <img src="<%= listing.image.url || '/images/default.jpg' %>" class="card-img-top" alt="<%= listing.title %>">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center"><%= listing.title %></h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% }); %>  
+            </div>  
+        <% } else { %>  
+            <h3 class="text-center text-danger mt-4">Listing's are not available</h3>
+        <% } %>  
+    </div>
+</body>
+</html>

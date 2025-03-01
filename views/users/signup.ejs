@@ -1,39 +1,63 @@
 <% layout("./layouts/boilerplate") %>
-<div class="row mt-3">
-    <h1 class="col-6 offset-3">Signup on Wanderlust</h1>
-<div class="col-6 offset-3">
-    
-    
 
-    <form action="/signup" method="post" class="needs-validation" novalidate> 
+<style>
+    /* Centering Form */
+    .signup-container {
+        max-width: 450px;
+        margin: auto;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        <div class="mb-3">
-            <label for="username" class="form-lebel"> Username</label>
-    
-            <input type="text" id="username"  name="username" class="form-control" required>
-            <div class="valid-feedback"> looks good!</div>
-            
-           </div>
+    /* Form Styling */
+    .form-label {
+        font-weight: 500;
+    }
 
-           <div class="mb-3">
-            <label for="email" class="form-lebel">Email</label>
-    
-            <input type="email" id="email"  name="email" class="form-control" required>
-            
-            
-           </div>
-           <div class="mb-3">
-            <label for="password" class="form-lebel">Password</label>
-    
-            <input type="password" id="password"  name="password" class="form-control" required>
-            
-            
-           </div>
-           <button class="btn btn-success">Signup </button>
+    /* Button */
+    .btn-success {
+        width: 100%;
+        padding: 10px;
+        font-size: 1.1rem;
+    }
 
+    /* Responsive Adjustments */
+    @media (max-width: 576px) {
+        .signup-container {
+            padding: 15px;
+        }
 
-           
+        h1 {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    }
+</style>
 
-    </form>
-</div>
+<div class="container mt-4">
+    <h1 class="text-center">Signup on WanderNest</h1>
+
+    <div class="signup-container">
+        <form action="/signup" method="post" class="needs-validation" novalidate> 
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+
+            <button class="btn btn-success">Signup</button>
+        </form>
+    </div>
 </div>

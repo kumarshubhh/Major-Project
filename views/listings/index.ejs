@@ -1,155 +1,140 @@
 <% layout("./layouts/boilerplate") %> 
 <body>
-    <!-- <h3>All Listings</h3> -->
-   <!--  <form action="/listings/new" method="GET">
-        <button>Create New Listings</button>
-    </form> -->
-
     <style>
-      #filters{
+      #filters {
         display: flex;
         flex-wrap: wrap;
-        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 10px;
       }
-      .filter{
+      .filter {
         text-align: center;
-        margin-left: 1.5rem;
-        margin-top: 1rem;
         opacity: 0.7;
+        transition: all 0.3s ease;
+        padding: 0.5rem;
+        border-radius: 8px;
       }
-      .filter:hover{
+      .filter:hover {
         opacity: 1;
         cursor: pointer;
+        background: rgba(0, 0, 0, 0.1);
       }
-      .filter p{
-        font-size: 0.85rem;
+      .filter a {
+        text-decoration: none;
+        color: #333;
       }
-      .tax-info{
+      .filter p {
+        font-size: 0.9rem;
+        margin: 0;
+      }
+      .tax-info {
         display: none;
       }
-      .tex-switch{
-        border: 1px solid black;
-        height: 3.25rem;
-        border-radius: 1rem;
-        padding: 1rem;
-        margin-left: 2.5rem;
+      .tex-switch {
         display: flex;
         align-items: center;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        border: 1px solid black;
+        margin-top: 1rem;
+        cursor: pointer;
+        width: fit-content;
+        
+      }
+      
+      .listing-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .listing-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      .card-img-top {
+        height: 250px;
+        object-fit: cover;
+      }
+      .card-body {
+        padding: 1rem;
+        background: #fff;
+      }
+      
+      @media (max-width: 768px) {
+        .row {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .filter {
+          flex: 1 1 40%;
+        }
+        .tex-switch {
+          width: 100%;
+          justify-content: center;
+        }
       }
     </style>
 
-<div id="filters">
-  <div class="filter">
-
-   <div> <i class="fa-solid fa-fire"></i></div>
-   <p> Trending</p>
-  </div>
-
-  <div class="filter">
-
-    <div> <i class="fa-solid fa-bed"></i></div>
-    <p> rooms</p>
-   </div>
-
-   <div class="filter">
-
-    <div> <i class="fa-solid fa-mountain-city"></i></div>
-    <p> iconic citys</p>
-   </div>
- 
-   <div class="filter">
- 
-     <div> <i class="fa-solid fa-mountain"></i></div>
-     <p> Mountains</p>
-    </div>
-    <div class="filter">
-
-      <div> <i class="fa-brands fa-fort-awesome"></i></div>
-      <p> Castles</p>
-     </div>
-   
-     <div class="filter">
-   
-       <div> <i class="fa-solid fa-person-swimming"></i></div>
-       <p> Amazing pools</p>
-      </div>
-
-
-      <div class="filter">
- 
-        <div> <i class="fa-solid fa-campground"></i></div>
-        <p> Camping</p>
-       </div>
-       <div class="filter">
-   
-         <div> <i class="fa-solid fa-cow"></i></div>
-         <p> Farms</p>
-        </div>
+    <div id="filters">
+      <% const categories = [
+        { name: "Trending", icon: "fa-fire" },
+        { name: "Rooms", icon: "fa-bed" },
+        { name: "Iconic Cities", icon: "fa-mountain-city" },
+        { name: "Mountains", icon: "fa-mountain" },
+        { name: "Castles", icon: "fa-fort-awesome" },
+        { name: "Amazing Pools", icon: "fa-person-swimming" },
+        { name: "Camping", icon: "fa-campground" },
+        { name: "Farms", icon: "fa-cow" },
+        { name: "Arctic", icon: "fa-snowflake" },
+        { name: "Domes", icon: "fa-igloo" }
+      ]; %>
       
+      <% for (let category of categories) { %>
         <div class="filter">
-      
-          <div> <i class="fa-regular fa-snowflake"></i></div>
-          <p> Arctic</p>
-         </div>
+          <a href="/listings/category/<%= category.name %>">
+            <div><i class="fa-solid <%= category.icon %>"></i></div>
+            <p><%= category.name %></p>
+          </a>
+        </div>
+      <% } %>
+    </div>
 
+    <div class="tex-switch">
+      <div class="form-check-reverse form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+      </div>
+    </div>
 
-         <div class="filter">
-   
-          <div> <i class="fa-solid fa-igloo"></i></div>
-          <p> Doms</p>
-         </div>
-       
-         
-         
-        
-
-         <div class="tex-switch">
-          <div class="form-check-reverse form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes </label>
-          </div>
-         </div>
-
-     
-</div>
-
-   
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3"> <% for (let listings of allListings){ %>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3"> 
+      <% for (let listings of allListings) { %>
         <a href="/listings/<%= listings._id %>" class="listing-link">
-        <div class="card col listing-card" >
-            
-            
-        <img src="<%= listings.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
-
-        <div class="card-img-overlay"> </div>
+          <div class="card col listing-card">
+            <img src="<%= listings.image.url %>" class="card-img-top" alt="listing_image">
             <div class="card-body">
-              <p class="card-text"> <b><%= listings.title %> </b> <br>
-                &#8377; <%= listings.price.toLocaleString("en-IN") %>/night <i class="tax-info"> &nbsp; &nbsp;+18% GST</i></p>
+              <p class="card-text">
+                <b><%= listings.title %></b> <br>
+                &#8377; <%= listings.price.toLocaleString("en-IN") %>/night 
+                <i class="tax-info"> &nbsp; &nbsp;+18% GST</i>
+              </p>
             </div>
           </div>
         </a>
-          <% } %></div>
+      <% } %>
+    </div>
 
-
-          <script>
-            let taxSwitch = document.getElementById("flexSwitchCheckDefault");
-          
-            taxSwitch.addEventListener("click", () =>{
-              let taxInfo = document.getElementsByClassName("tax-info");
-
-
-              for(info of taxInfo){
-                if(info.style.display != "inline"){
-                  info.style.display= "inline";
-                }else{
-                  info.style.display= "none";
-                }
-              }
-            })
-          </script>
-          
-
-    
-    
+    <script>
+      let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+      taxSwitch.addEventListener("click", () => {
+        let taxInfo = document.getElementsByClassName("tax-info");
+        for (let info of taxInfo) {
+          info.style.display = info.style.display !== "inline" ? "inline" : "none";
+        }
+      });
+    </script>
 </body>
-

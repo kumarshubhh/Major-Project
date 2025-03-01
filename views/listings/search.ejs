@@ -1,0 +1,68 @@
+<% layout("./layouts/boilerplate") %>
+
+<style>
+    /* General Styling */
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    /* Card Image */
+    .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    /* Card Styling */
+    .listing-card {
+        max-width: 350px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .listing-card:hover {
+        transform: scale(1.03);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 576px) {
+        .listing-card {
+            max-width: 100%;
+        }
+
+        .search-title {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<div class="container mt-4">
+    <h3 class="text-center search-title">Search Results for "<%= query %>":</h3>
+    
+    <div class="row justify-content-center" id="listingItems">
+        <% if (results.length > 0) { %>
+            <% results.forEach(listing => { %>
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4 d-flex justify-content-center">
+                    <div class="card listing-card w-100">
+                        <a href="/listings/<%= listing._id %>">
+                            <img src="<%= listing.image.url || '/images/default.jpg' %>" class="card-img-top" alt="<%= listing.title %>">
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><%= listing.title %></h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="text-center text-danger mt-4">No results found for "<%= query %>"</p>
+        <% } %>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

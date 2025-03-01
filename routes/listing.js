@@ -22,6 +22,43 @@ router.route("/")
 router.get("/new", isLoggedIn, listingController.renderNewForm)
 
 
+router.get("/category/:category", async (req, res) => {
+    const category = req.params.category;
+    const listings = await Listing.find({ category: category });
+    
+    res.render("./listings/category", { listings, category });
+});
+
+
+
+router.get("/search",wrapAsync( async (req, res) => {
+    const query = req.query.query; // Get the query from the search form
+
+    if (!query) {
+        return res.redirect("/listings"); // If no query, redirect to the homepage
+    }
+
+    try {
+        // Search for listings that match the query (case-insensitive search)
+        const results = await Listing.find({
+            title: { $regex: query, $options: "i" } // Regex search, case insensitive
+        });
+
+        // Render search.ejs with the results and the search query
+        res.render("./listings/search.ejs", {
+            results: results, 
+            query: query
+        });
+    } catch (err) {
+        console.error("Search error:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}));
+
+
+
+
+
 
 router.route("/:id")
 .get( wrapAsync(listingController.showListing))
